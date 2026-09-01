@@ -162,10 +162,14 @@ window.copyToClipboard = function(text, successMsg = 'सफलतापूर�
     });
 };
 
-// Share to WhatsApp Utility
-window.shareOnWhatsApp = function(text) {
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + '\n\n🔗 अधिक जानकारी के लिए देखें: आरक्षण हटाओ आंदोलन (RHA)')}`;
-    window.open(url, '_blank');
+// Share to WhatsApp Utility. Keep the URL on its own unformatted line so
+// WhatsApp reliably detects it as a clickable link on web and desktop.
+window.shareOnWhatsApp = function(text, specificHash = '') {
+    const baseUrl = 'https://rhaindia.me/';
+    const targetUrl = specificHash ? `${baseUrl}#${specificHash.replace(/^#/, '')}` : baseUrl;
+    const fullMessage = `${text.trim()}\n\n🔗 अधिक जानकारी के लिए देखें:\n${targetUrl}`;
+    const shareUrl = `https://wa.me/?text=${encodeURIComponent(fullMessage)}`;
+    window.open(shareUrl, '_blank', 'noopener,noreferrer');
 };
 
 /* ==========================================================================
