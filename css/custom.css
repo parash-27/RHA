@@ -1,0 +1,248 @@
+/* ==========================================================================
+   आरक्षण हटाओ आंदोलन (RHA) - Custom Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap');
+
+:root {
+    --font-hindi: 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Outfit', 'Noto Sans Devanagari', sans-serif;
+    --primary-navy: #0f172a;
+    --primary-blue: #1e3a8a;
+    --primary-saffron: #f97316;
+    --primary-crimson: #dc2626;
+    --primary-gold: #eab308;
+    --card-bg-light: rgba(255, 255, 255, 0.92);
+    --card-bg-dark: rgba(30, 41, 59, 0.85);
+}
+
+* {
+    font-family: var(--font-hindi);
+}
+
+h1, h2, h3, .font-heading {
+    font-family: var(--font-heading), var(--font-hindi);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch targets and mobile optimizations */
+button, a, input, select {
+    touch-action: manipulation;
+}
+
+.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0b1120;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel-light {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hero-gradient {
+    background: radial-gradient(circle at 50% 20%, rgba(220, 38, 38, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.12), transparent 40%),
+                linear-gradient(180deg, #090d16 0%, #0f172a 100%);
+}
+
+.tricolor-border {
+    border-image: linear-gradient(to right, #ff9933, #ffffff, #138808) 1;
+}
+
+/* Animated Pulse Badge */
+.pulse-badge {
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+/* View transition animations */
+.page-view {
+    display: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.page-view.active-view {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Portal Explore Cards */
+.portal-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portal-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(249, 115, 22, 0.2);
+}
+
+/* Quotes Carousel / Grid transitions */
+.quote-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quote-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Slogan Card Styles */
+.slogan-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.slogan-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #f97316, #ef4444);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.slogan-card:hover::before {
+    opacity: 1;
+}
+
+.slogan-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Timeline specific styles */
+.timeline-stem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 3px;
+    background: linear-gradient(180deg, #f97316, #3b82f6, #10b981);
+}
+
+@media (min-width: 768px) {
+    .timeline-stem::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* Toast notifications */
+#toast {
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+#toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Nav Active Link */
+.nav-link.active-nav {
+    color: #f97316;
+    background-color: rgba(249, 115, 22, 0.12);
+    border-radius: 0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* ==========================================================================
+   Print / PDF Factsheet Styling
+   ========================================================================== */
+@media print {
+    header, footer, #mobileMenu, .no-print, button, .portal-card {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        font-size: 11pt;
+    }
+
+    .page-view {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .bg-slate-950, .bg-slate-900, .bg-slate-900\/90, .bg-slate-900\/80 {
+        background: #f9fafb !important;
+        border-color: #e5e7eb !important;
+        color: #111827 !important;
+        box-shadow: none !important;
+    }
+
+    .text-white, .text-slate-200, .text-slate-300, .text-slate-400 {
+        color: #111827 !important;
+    }
+
+    .text-orange-400, .text-amber-400, .text-red-400, .text-emerald-400, .text-blue-400 {
+        color: #b45309 !important;
+        font-weight: bold;
+    }
+
+    .border-slate-800, .border-slate-700 {
+        border-color: #d1d5db !important;
+    }
+}
