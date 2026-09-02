@@ -169,7 +169,14 @@ window.shareOnWhatsApp = function(text, specificHash = '') {
     const targetUrl = specificHash ? `${baseUrl}#${specificHash.replace(/^#/, '')}` : baseUrl;
     const fullMessage = `${text.trim()}\n\n🔗 अधिक जानकारी के लिए देखें:\n${targetUrl}`;
     const shareUrl = `https://wa.me/?text=${encodeURIComponent(fullMessage)}`;
-    window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    
+    // On mobile devices, window.location.href directly opens WhatsApp app without popup blockers
+    const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if (isMobile) {
+        window.location.href = shareUrl;
+    } else {
+        window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    }
 };
 
 /* ==========================================================================
@@ -446,7 +453,7 @@ window.runMeritCalculation = function() {
                 <div class="text-xs text-slate-400 font-mono">
                     सामान्य: ${config.generalCutoff} | OBC: ${config.obcCutoff} | SC: ${config.scCutoff} | ST: ${config.stCutoff}
                 </div>
-                <button onclick="shareOnWhatsApp('${shareVerdict.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all flex items-center gap-2">
+                <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(shareVerdict)}'))" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all flex items-center gap-2">
                     <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                     <span>अपना रिजल्ट WhatsApp पर शेयर करें</span>
                 </button>
@@ -674,7 +681,7 @@ function renderAgitations() {
                             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                             <span>कॉपी करें</span>
                         </button>
-                        <button onclick="shareOnWhatsApp('${shareText.replace(/'/g, "\\'")}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
+                        <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(shareText)}'))" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                             <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                             <span>WhatsApp शेयर</span>
                         </button>
@@ -827,7 +834,7 @@ function renderLeaderQuotes() {
                         <button onclick="copyToClipboard('${quote.quote.replace(/'/g, "\\'")}', 'बयान कॉपी हो गया!')" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors" title="बयान कॉपी करें">
                             <i data-lucide="copy" class="w-4 h-4"></i>
                         </button>
-                        <button onclick="shareOnWhatsApp('${shareText.replace(/'/g, "\\'")}')" class="p-2 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white transition-colors flex items-center gap-1" title="व्हाट्सएप पर शेयर करें">
+                        <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(shareText)}'))" class="p-2 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white transition-colors flex items-center gap-1" title="व्हाट्सएप पर शेयर करें">
                             <i data-lucide="share-2" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -907,7 +914,7 @@ function renderSlogans() {
                         <span>कॉपी करें</span>
                     </button>
 
-                    <button onclick="shareOnWhatsApp('${shareText.replace(/'/g, "\\'")}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
+                    <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(shareText)}'))" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                         <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                         <span>WhatsApp</span>
                     </button>
