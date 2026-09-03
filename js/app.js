@@ -1034,7 +1034,7 @@ function initSearchAndFilters() {
 }
 
 /* ==========================================================================
-   13. Community Logs & Wall of Warriors (આંદોલન દૈનિક ડાયરી અને યોદ્ધા દીવાલ)
+   13. Community Logs & Wall of Warriors (आंदोलन दैनिक डायरी एवं योद्धा दीवार)
    ========================================================================== */
 
 window.filterDailyLogByDate = function(dateId) {
@@ -1044,7 +1044,7 @@ window.filterDailyLogByDate = function(dateId) {
     renderCommunityLogs(dateId);
 };
 
-window.openImageViewer = function(imageSrc, imageTitle = 'સત્યાગ્રહી યોદ્ધા પ્રમાણપત્ર') {
+window.openImageViewer = function(imageSrc, imageTitle = 'सत्याग्रही योद्धा प्रमाण पत्र') {
     let modal = document.getElementById('imageViewerModal');
     if (!modal) {
         modal = document.createElement('div');
@@ -1101,7 +1101,7 @@ function renderCommunityLogs(selectedDate = null) {
     if (tabsContainer) {
         let tabsHtml = `
             <button onclick="filterDailyLogByDate('all')" class="daily-tab-btn px-4 py-2 rounded-2xl text-xs md:text-sm font-bold transition-all ${activeDate === 'all' ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg shadow-pink-500/20' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'}">
-                📅 સંપૂર્ણ ઈતિહાસ
+                📅 संपूर्ण इतिहास
             </button>
         `;
 
@@ -1123,7 +1123,7 @@ function renderCommunityLogs(selectedDate = null) {
     container.innerHTML = displayLogs.map(log => {
         // Screenshots Grid HTML
         const screenshotsHtml = (log.warriorScreenshots || []).map(sc => {
-            const boastText = `🌟 *आरक्षण हटाओ आंदोलन (RHA) की योद्धा दीवार:* \n\n📸 *${sc.title}*\n🎖️ સન્માન: *${sc.badge}*\n💬 ${sc.caption}\n\n👉 *જાતિ નહીં, યોગ્યતાને ઓળખો! પ્રતિભાને તેનો હક અપાવો!*\n\n🔗 લાઈવ યોદ્ધા દીવાલ જુઓ:\nhttps://rhaindia.me/#community-log`;
+            const boastText = `🌟 *आरक्षण हटाओ आंदोलन (RHA) की योद्धा दीवार:* \n\n📸 *${sc.title}*\n🎖️ सम्मान: *${sc.badge}*\n💬 ${sc.caption}\n\n👉 *जाति नहीं, योग्यता को पहचानो! प्रतिभा को उसका हक दिलाओ!*\n\n🔗 लाइव योद्धा दीवार देखें:\nhttps://rhaindia.me/#community-log`;
             const imgSrc = encodeURI(sc.image);
             return `
                 <div class="warrior-screenshot-card bg-slate-900/90 border border-slate-800 hover:border-pink-500/60 rounded-3xl p-4 shadow-xl transition-all flex flex-col justify-between group">
@@ -1134,7 +1134,7 @@ function renderCommunityLogs(selectedDate = null) {
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-3">
                                 <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-rose-600 text-white shadow-md flex items-center gap-1">
                                     <i data-lucide="zoom-in" class="w-3 h-3"></i>
-                                    <span>મોટો ફોટો જુઓ</span>
+                                    <span>बड़ा फोटो देखें</span>
                                 </span>
                             </div>
                         </div>
@@ -1156,9 +1156,9 @@ function renderCommunityLogs(selectedDate = null) {
                         <span class="text-[11px] font-mono text-slate-400">
                             📅 ${sc.date}
                         </span>
-                        <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(boastText)}'))" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5" title="WhatsApp પર શેર કરો">
+                        <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(boastText)}'))" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5" title="WhatsApp पर शेयर करें">
                             <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                            <span>શેર કરો</span>
+                            <span>शेयर करें</span>
                         </button>
                     </div>
                 </div>
@@ -1185,7 +1185,7 @@ function renderCommunityLogs(selectedDate = null) {
                         </div>
                         <h3 class="text-2xl font-black text-white">${log.headline}</h3>
                         <p class="text-xs md:text-sm text-slate-400 mt-1">
-                            🏆 મુખ્ય સિદ્ધિ: <strong class="text-slate-200">${log.milestone}</strong>
+                            🏆 मुख्य उपलब्धि: <strong class="text-slate-200">${log.milestone}</strong>
                         </p>
                     </div>
 
@@ -1193,15 +1193,15 @@ function renderCommunityLogs(selectedDate = null) {
                     <div class="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
                         <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl text-center">
                             <span class="block text-lg sm:text-xl font-black text-orange-400">${log.views}</span>
-                            <span class="text-[10px] font-bold text-slate-400">વેબસાઇટ Views</span>
+                            <span class="text-[10px] font-bold text-slate-400">वेबसाइट Views</span>
                         </div>
                         <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl text-center">
                             <span class="block text-lg sm:text-xl font-black text-emerald-400">${log.activeUsers}</span>
-                            <span class="text-[10px] font-bold text-slate-400">સક્રિય વિદ્યાર્થીઓ</span>
+                            <span class="text-[10px] font-bold text-slate-400">सक्रिय छात्र</span>
                         </div>
                         <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl text-center">
                             <span class="block text-lg sm:text-xl font-black text-pink-400">${log.instagramNewMembers}</span>
-                            <span class="text-[10px] font-bold text-slate-400">Instagram યોદ્ધા</span>
+                            <span class="text-[10px] font-bold text-slate-400">Instagram योद्धा</span>
                         </div>
                     </div>
                 </div>
@@ -1219,7 +1219,7 @@ function renderCommunityLogs(selectedDate = null) {
                     <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-                            <span>પ્રમાણિત દૈનિક સિદ્ધિઓ (Verified Records):</span>
+                            <span>प्रमाणित दैनिक उपलब्धियां (Verified Records):</span>
                         </h4>
                         <ul class="space-y-1.5">
                             ${highlightsHtml}
@@ -1232,10 +1232,10 @@ function renderCommunityLogs(selectedDate = null) {
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-base font-black text-white flex items-center gap-2">
                             <i data-lucide="award" class="w-4 h-4 text-pink-400"></i>
-                            <span>જોડાયેલા સત્યાગ્રહી યોદ્ધાઓના પ્રમાણિત સ્ક્રીનશોટ્સ (Wall of Honor Gallery)</span>
+                            <span>जुड़े हुए सत्याग्रही योद्धाओं के प्रमाणित स्क्रीनशॉट (Wall of Honor Gallery)</span>
                         </h4>
                         <span class="text-xs text-slate-400 font-mono">
-                            ${(log.warriorScreenshots || []).length} પ્રમાણપત્ર લાઈવ
+                            ${(log.warriorScreenshots || []).length} प्रमाण पत्र लाइव
                         </span>
                     </div>
 
