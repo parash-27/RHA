@@ -1062,7 +1062,7 @@ const RHA_DATA = {
                 }
             ],
             highlights: [
-                "📊 Google Analytics પર 145+ Event Count અને 250+ Views નોંધાયા.",
+                "📊 Google Analytics પર 749+ Event Count અને 250+ Views નોંધાયા.",
                 "📸 Instagram (@rhaindia.me) પર 8+ જાગૃત વિદ્યાર્થીઓએ ફોલો કરીને સમર્થન આપ્યું.",
                 "📱 WhatsApp પર મેરિટ કેલ્ક્યુલેટર અને આંદોલન કાર્ડ્સ ખૂબ ઝડપથી વાયરલ થઈ રહ્યા છે."
             ]
