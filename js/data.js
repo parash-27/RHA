@@ -981,7 +981,93 @@ const RHA_DATA = {
         currentYearsRunning: 76,
         extensionsCount: 8,
         scLimitPercent: 50
-    }
+    },
+
+    // 12. आंदोलन दैनिक प्रगति डायरी एवं योद्धा दीवार (Daily Movement Log & Wall of Warriors)
+    dailyLogs: [
+        {
+            date: "02-03 सितम्बर 2026",
+            dateId: "2026-09-02",
+            dayNumber: "પ્રારંભિક ચરણ (Launch & Movement Growth)",
+            headline: "વેબસાઇટ પર 250+ લાઈવ Views & Instagram (@rhaindia.me) પર 8+ સત્યાગ્રહી યોદ્ધાઓ જોડાયા!",
+            views: "250+",
+            activeUsers: "34+ સક્રિય વિદ્યાર્થીઓ",
+            instagramNewMembers: "8+ વીર રાષ્ટ્રભક્ત યોદ્ધા",
+            milestone: "rhaindia.me ડોમેન લાઈવ થતાં જ પ્રથમ તબક્કામાં 250+ Views અને યુવાનોનું અભૂતપૂર્વ સમર્થન!",
+            sloganOfTheDay: "आरक्षण देना ही है तो जाति के आधार पर नहीं, बल्कि आर्थिक आधार पर दो!",
+            warriorScreenshots: [
+                {
+                    id: 1,
+                    image: "followers 1.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #1",
+                    caption: "આંદોલનને સમર્થન આપનાર જાગૃત રાષ્ટ્રભક્ત યુવા",
+                    badge: "🌟 પ્રથમ ચરણ યોદ્ધા",
+                    date: "02 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 2,
+                    image: "followers 2.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #2",
+                    caption: "યોગ્યતા અને સમાનતાના હકની લડાઈમાં જોડાયેલ સાથી",
+                    badge: "🔥 મેરિટ સમર્થક",
+                    date: "02 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 3,
+                    image: "followers 3.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #3",
+                    caption: "આર્થિક આધાર પર સાચા ન્યાયની માંગ કરતા સત્યાગ્રહી",
+                    badge: "💡 આર્થિક ન્યાય યોદ્ધા",
+                    date: "02 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 4,
+                    image: "followers 4.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #4",
+                    caption: "પ્રતિભાના સન્માન માટે આગળ આવેલા દેશભક્ત વિદ્યાર્થી",
+                    badge: "📜 સમાનતા સત્યાગ્રહી",
+                    date: "02 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 5,
+                    image: "followers 5.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #5",
+                    caption: "OBC અને સામાન્ય વર્ગની ઐતિહાસિક એકતાના સમર્થક",
+                    badge: "🤝 OBC-સામાન્ય એકતા",
+                    date: "02 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 6,
+                    image: "followers 6.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #6",
+                    caption: "2026 રાષ્ટ્રવ્યાપી આંદોલનની બુલંદ અવાજ બનેલ યુવા",
+                    badge: "⚡ 2026 ક્રાંતિ યોદ્ધા",
+                    date: "03 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 7,
+                    image: "followers 7.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #7",
+                    caption: "જાતિ-મુક્ત અને યોગ્યતા-આધારિત ભારતના નિર્માણમાં સહભાગી",
+                    badge: "🇮🇳 રાષ્ટ્ર નિર્માતા",
+                    date: "03 સપ્ટેમ્બર 2026"
+                },
+                {
+                    id: 8,
+                    image: "followers 8.jpeg",
+                    title: "સત્યાગ્રહી યોદ્ધા #8",
+                    caption: "મેરિટ અને પ્રતિભાને બચાવવાના મહા-અભિયાનમાં સામેલ",
+                    badge: "🎯 પ્રતિભા રક્ષક",
+                    date: "03 સપ્ટેમ્બર 2026"
+                }
+            ],
+            highlights: [
+                "📊 Google Analytics પર 145+ Event Count અને 250+ Views નોંધાયા.",
+                "📸 Instagram (@rhaindia.me) પર 8+ જાગૃત વિદ્યાર્થીઓએ ફોલો કરીને સમર્થન આપ્યું.",
+                "📱 WhatsApp પર મેરિટ કેલ્ક્યુલેટર અને આંદોલન કાર્ડ્સ ખૂબ ઝડપથી વાયરલ થઈ રહ્યા છે."
+            ]
+        }
+    ]
 };
 
 // Window object me export

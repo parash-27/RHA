@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Initial State
     const state = {
         currentView: 'home',
+        selectedDailyLogDate: 'all',
         selectedTimelineCategory: 'all',
         quoteSearchQuery: '',
         quoteFilterEra: 'all',
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLeaderQuotes();
     renderSlogans();
     renderMythsVsFacts();
+    renderCommunityLogs();
     initSearchAndFilters();
     initRouter();
     startLiveTicker();
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
    2. Modular SPA Router & View Switcher (दृश्य नियंत्रक)
    ========================================================================== */
 
-const VALID_VIEWS = ['home', 'calculator', 'solution', 'student-impact', 'global', 'history', 'ten-year-limit', 'agitations', 'leaders-quotes', 'slogans', 'toolkit', 'facts-myths'];
+const VALID_VIEWS = ['home', 'community-log', 'calculator', 'solution', 'student-impact', 'global', 'history', 'ten-year-limit', 'agitations', 'leaders-quotes', 'slogans', 'toolkit', 'facts-myths'];
 
 window.navigateTo = function(viewName, updateHash = true) {
     if (!VALID_VIEWS.includes(viewName)) {
@@ -1029,4 +1031,222 @@ function initSearchAndFilters() {
             renderTimeline(filterType);
         });
     });
+}
+
+/* ==========================================================================
+   13. Community Logs & Wall of Warriors (આંદોલન દૈનિક ડાયરી અને યોદ્ધા દીવાલ)
+   ========================================================================== */
+
+window.filterDailyLogByDate = function(dateId) {
+    if (window.rhaState) {
+        window.rhaState.selectedDailyLogDate = dateId;
+    }
+    renderCommunityLogs(dateId);
+};
+
+window.openImageViewer = function(imageSrc, imageTitle = 'સત્યાગ્રહી યોદ્ધા પ્રમાણપત્ર') {
+    let modal = document.getElementById('imageViewerModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'imageViewerModal';
+        modal.className = 'fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 transition-all opacity-0 pointer-events-none';
+        modal.innerHTML = `
+            <div class="relative max-w-3xl w-full bg-slate-900 border-2 border-slate-800 rounded-3xl p-4 shadow-2xl flex flex-col items-center">
+                <div class="w-full flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+                    <h4 id="imageViewerTitle" class="text-sm md:text-base font-bold text-white flex items-center gap-2">
+                        <i data-lucide="award" class="w-4 h-4 text-pink-400"></i>
+                        <span></span>
+                    </h4>
+                    <button onclick="window.closeImageViewer()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div class="max-h-[75vh] overflow-auto rounded-2xl flex items-center justify-center bg-black/40 w-full p-2">
+                    <img id="imageViewerImg" src="" alt="Proof Screenshot" class="max-h-[70vh] w-auto object-contain rounded-xl shadow-lg">
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const modalImg = document.getElementById('imageViewerImg');
+    const modalTitle = document.getElementById('imageViewerTitle');
+    if (modalImg) modalImg.src = imageSrc;
+    if (modalTitle) modalTitle.querySelector('span').innerText = imageTitle;
+
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.classList.add('opacity-100', 'pointer-events-auto');
+    if (window.lucide) lucide.createIcons();
+};
+
+window.closeImageViewer = function() {
+    const modal = document.getElementById('imageViewerModal');
+    if (modal) {
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+};
+
+function renderCommunityLogs(selectedDate = null) {
+    const tabsContainer = document.getElementById('dailyLogDateTabs');
+    const container = document.getElementById('dailyLogContainer');
+    if (!container) return;
+
+    const logs = (typeof RHA_DATA !== 'undefined' && RHA_DATA.dailyLogs) ? RHA_DATA.dailyLogs : [];
+    if (logs.length === 0) return;
+
+    const activeDate = selectedDate || (window.rhaState && window.rhaState.selectedDailyLogDate) || 'all';
+
+    // 1. Render Date Tabs
+    if (tabsContainer) {
+        let tabsHtml = `
+            <button onclick="filterDailyLogByDate('all')" class="daily-tab-btn px-4 py-2 rounded-2xl text-xs md:text-sm font-bold transition-all ${activeDate === 'all' ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg shadow-pink-500/20' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'}">
+                📅 સંપૂર્ણ ઈતિહાસ
+            </button>
+        `;
+
+        logs.forEach(log => {
+            const isCurrent = activeDate === log.dateId;
+            tabsHtml += `
+                <button onclick="filterDailyLogByDate('${log.dateId}')" class="daily-tab-btn px-4 py-2 rounded-2xl text-xs md:text-sm font-bold transition-all ${isCurrent ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg shadow-pink-500/20' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'}">
+                    ⭐ ${log.dayNumber}: ${log.date}
+                </button>
+            `;
+        });
+        tabsContainer.innerHTML = tabsHtml;
+    }
+
+    // 2. Filter Logs
+    const displayLogs = activeDate === 'all' ? logs : logs.filter(l => l.dateId === activeDate);
+
+    // 3. Render Each Day's Section
+    container.innerHTML = displayLogs.map(log => {
+        // Screenshots Grid HTML
+        const screenshotsHtml = (log.warriorScreenshots || []).map(sc => {
+            const boastText = `🌟 *आरक्षण हटाओ आंदोलन (RHA) की योद्धा दीवार:* \n\n📸 *${sc.title}*\n🎖️ સન્માન: *${sc.badge}*\n💬 ${sc.caption}\n\n👉 *જાતિ નહીં, યોગ્યતાને ઓળખો! પ્રતિભાને તેનો હક અપાવો!*\n\n🔗 લાઈવ યોદ્ધા દીવાલ જુઓ:\nhttps://rhaindia.me/#community-log`;
+            const imgSrc = encodeURI(sc.image);
+            return `
+                <div class="warrior-screenshot-card bg-slate-900/90 border border-slate-800 hover:border-pink-500/60 rounded-3xl p-4 shadow-xl transition-all flex flex-col justify-between group">
+                    <div>
+                        <!-- Screenshot Image with Click to Zoom -->
+                        <div class="relative overflow-hidden rounded-2xl bg-black/60 mb-4 aspect-[4/5] flex items-center justify-center border border-slate-800 cursor-pointer" onclick="openImageViewer('${imgSrc}', '${sc.title} - ${sc.badge}')">
+                            <img src="${imgSrc}" alt="${sc.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-3">
+                                <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-rose-600 text-white shadow-md flex items-center gap-1">
+                                    <i data-lucide="zoom-in" class="w-3 h-3"></i>
+                                    <span>મોટો ફોટો જુઓ</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Details -->
+                        <div class="space-y-1.5 mb-3">
+                            <div class="flex items-center justify-between gap-1 flex-wrap">
+                                <h4 class="text-base font-black text-white group-hover:text-pink-300 transition-colors">${sc.title}</h4>
+                                <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                                    ${sc.badge}
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">${sc.caption}</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Actions -->
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+                        <span class="text-[11px] font-mono text-slate-400">
+                            📅 ${sc.date}
+                        </span>
+                        <button onclick="shareOnWhatsApp(decodeURIComponent('${encodeURIComponent(boastText)}'))" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5" title="WhatsApp પર શેર કરો">
+                            <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                            <span>શેર કરો</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Highlights List
+        const highlightsHtml = (log.highlights || []).map(h => `
+            <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                <span class="text-emerald-400 font-bold">✔</span>
+                <span>${h}</span>
+            </li>
+        `).join('');
+
+        return `
+            <div class="day-log-card bg-slate-900 border-2 border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6">
+                
+                <!-- Day Header & Highlights -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-bold mb-2 border border-rose-500/40">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                            <span>${log.dayNumber} — ${log.date}</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">${log.headline}</h3>
+                        <p class="text-xs md:text-sm text-slate-400 mt-1">
+                            🏆 મુખ્ય સિદ્ધિ: <strong class="text-slate-200">${log.milestone}</strong>
+                        </p>
+                    </div>
+
+                    <!-- Daily Stat Counters -->
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
+                        <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl text-center">
+                            <span class="block text-lg sm:text-xl font-black text-orange-400">${log.views}</span>
+                            <span class="text-[10px] font-bold text-slate-400">વેબસાઇટ Views</span>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl text-center">
+                            <span class="block text-lg sm:text-xl font-black text-emerald-400">${log.activeUsers}</span>
+                            <span class="text-[10px] font-bold text-slate-400">સક્રિય વિદ્યાર્થીઓ</span>
+                        </div>
+                        <div class="bg-slate-950 border border-slate-800 p-3 rounded-2xl text-center">
+                            <span class="block text-lg sm:text-xl font-black text-pink-400">${log.instagramNewMembers}</span>
+                            <span class="text-[10px] font-bold text-slate-400">Instagram યોદ્ધા</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Slogan Quote Banner -->
+                <div class="p-4 rounded-2xl bg-gradient-to-r from-orange-500/10 via-rose-500/10 to-transparent border-l-4 border-orange-500 flex items-center gap-3">
+                    <i data-lucide="flame" class="w-5 h-5 text-orange-400 shrink-0"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-200">
+                        "${log.sloganOfTheDay}"
+                    </span>
+                </div>
+
+                <!-- Verified Highlights Box -->
+                ${highlightsHtml ? `
+                    <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                            <span>પ્રમાણિત દૈનિક સિદ્ધિઓ (Verified Records):</span>
+                        </h4>
+                        <ul class="space-y-1.5">
+                            ${highlightsHtml}
+                        </ul>
+                    </div>
+                ` : ''}
+
+                <!-- Section: Warrior Screenshots Gallery -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-base font-black text-white flex items-center gap-2">
+                            <i data-lucide="award" class="w-4 h-4 text-pink-400"></i>
+                            <span>જોડાયેલા સત્યાગ્રહી યોદ્ધાઓના પ્રમાણિત સ્ક્રીનશોટ્સ (Wall of Honor Gallery)</span>
+                        </h4>
+                        <span class="text-xs text-slate-400 font-mono">
+                            ${(log.warriorScreenshots || []).length} પ્રમાણપત્ર લાઈવ
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        ${screenshotsHtml}
+                    </div>
+                </div>
+
+            </div>
+        `;
+    }).join('');
+
+    if (window.lucide) lucide.createIcons();
 }
